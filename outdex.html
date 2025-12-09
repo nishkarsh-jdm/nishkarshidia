@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Minecraft Characters</title>
+<style>
+body{
+  background:#0b0f12;
+  color:white;
+  font-family:system-ui;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+canvas{
+  image-rendering:pixelated;
+  background:#081018;
+  margin:10px;
+  border:4px solid #1c1c1c;
+}
+h1{text-align:center;}
+</style>
+</head>
+<body>
+<h1>Minecraft Characters</h1>
+<canvas id="canvas" width="800" height="400"></canvas>
+
+<script>
+// pixel "draw" helper
+function drawPixel(ctx, x, y, size, color){
+  ctx.fillStyle=color;
+  ctx.fillRect(x*size, y*size, size, size);
+}
+
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+
+const scale=20; // size of one pixel
+
+// Characters grid positions
+const chars=[{name:'Creeper', x:1, pattern:'creeper'}, 
+             {name:'Steve', x:12, pattern:'steve'}, 
+             {name:'Alex', x:23, pattern:'alex'},
+             {name:'Skeleton', x:34, pattern:'skeleton'}];
+
+// simple patterns (8x8 head for starters, body below)
+const patterns={
+  creeper:[
+    ['green','darkgreen','darkgreen','green','green','darkgreen','darkgreen','green'],
+    ['darkgreen','green','green','darkgreen','darkgreen','green','green','darkgreen'],
+    ['darkgreen','green','black','black','black','black','green','darkgreen'],
+    ['green','darkgreen','black','black','black','black','darkgreen','green'],
+    ['green','darkgreen','black','black','black','black','darkgreen','green'],
+    ['darkgreen','green','black','black','black','black','green','darkgreen'],
+    ['darkgreen','green','green','darkgreen','darkgreen','green','green','darkgreen'],
+    ['green','darkgreen','darkgreen','green','green','darkgreen','darkgreen','green']
+  ],
+  steve:[
+    ['#2c6eb2','#2c6eb2','#2c6eb2','#2c6eb2','#2c6eb2','#2c6eb2','#2c6eb2','#2c6eb2'],
+    ['#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd'],
+    ['#0000ff','#0000ff','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#0000ff','#0000ff'],
+    ['#0000ff','#0000ff','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#0000ff','#0000ff'],
+    ['#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff'],
+    ['#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff','#0000ff'],
+    ['#654321','#654321','#654321','#654321','#654321','#654321','#654321','#654321'],
+    ['#654321','#654321','#654321','#654321','#654321','#654321','#654321','#654321']
+  ],
+  alex:[
+    ['#b97a57','#b97a57','#b97a57','#b97a57','#b97a57','#b97a57','#b97a57','#b97a57'],
+    ['#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd'],
+    ['#ff0000','#ff0000','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ff0000','#ff0000'],
+    ['#ff0000','#ff0000','#ffe0bd','#ffe0bd','#ffe0bd','#ffe0bd','#ff0000','#ff0000'],
+    ['#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00'],
+    ['#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00','#00ff00'],
+    ['#654321','#654321','#654321','#654321','#654321','#654321','#654321','#654321'],
+    ['#654321','#654321','#654321','#654321','#654321','#654321','#654321','#654321']
+  ],
+  skeleton:[
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff'],
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff'],
+    ['#fff','#fff','#000','#000','#000','#000','#fff','#fff'],
+    ['#fff','#fff','#000','#000','#000','#000','#fff','#fff'],
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff'],
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff'],
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff'],
+    ['#fff','#fff','#fff','#fff','#fff','#fff','#fff','#fff']
+  ]
+};
+
+// Draw all characters
+chars.forEach(cObj=>{
+  const startX=cObj.x*scale;
+  const startY=50;
+  const pattern=patterns[cObj.pattern];
+  for(let y=0;y<pattern.length;y++){
+    for(let x=0;x<pattern[y].length;x++){
+      drawPixel(ctx, x+cObj.x, y+2, scale, pattern[y][x]);
+    }
+  }
+});
+
+</script>
+</body>
+</html>
